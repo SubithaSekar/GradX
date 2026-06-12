@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SGPA Calculator</title>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+body {
+    font-family: Arial;
+    margin: 0;
+    background: #f5f5f5; /* changed from red */
+    display: flex;
+    justify-content: center;
+    box-sizing: border-box;
+    padding: 10px;
+}
+
+/* Main box */
+.container {
+    background: white;
+    padding: 20px;
+    border-radius: 15px;
+    width: 100%;          /* responsive */
+    max-width: 900px;
+    min-height: 90vh;    /* for laptop */
+    box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+    text-align: center;
+    box-sizing: border-box;
+}
+
+/* Inputs */
+input, select {
+    width: 100%;         /* full width for mobile */
+    padding: 10px;
+    margin: 6px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+}
+
+/* Buttons */
+button {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: none;
+    border-radius: 8px;
+    background: #5f9cff;
+    color: white;
+    font-size: 16px;
+}
+
+button:hover {
+    background: #33273d;
+}
+
+/* Subject boxes */
+.subject-box {
+    border: 1px solid #eee;
+    margin: 10px 0;
+    padding: 10px;
+    border-radius: 10px;
+}
+
+/* Result text */
+#result {
+    margin-top: 10px;
+    font-weight: bold;
+    color: black;   /* prevent red text */
+}
+
+/* Message */
+#message {
+    margin-top: 8px;
+    font-size: 14px;
+}
+
+/* Chart responsive */
+canvas {
+    width: 100% !important;
+    height: auto !important;
+}
+
+/* Back button */
+.back {
+    margin-top: 15px;
+    text-align: center;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="container">
+
+<h2>SGPA Calculator</h2>
+
+<div id="subjectsContainer"></div>
+
+<button onclick="addSubject()">Add Subject</button>
+<button onclick="calculateCGPA()">Calculate SGPA</button>
+
+<button onclick="goToCGPA()">Next</button>
+
+<div id="result"></div>
+<div id="message"></div>
+
+<canvas id="chart"></canvas>
+
+</div>
+
+<script>
+
+let chart;
+
+// Grade → GPA conversion
+function gradeToPoint(grade) {
+    switch(grade.toUpperCase()) {
+        case "O": return 10;
+        case "A+": return 9;
+        case "A": return 8;
+        case "B+": return 7;
+        case "B": return 6;
+        case "C": return 5;
+        case "U":
+        case "F": return 0;
+        default: return 0;
+    }
+}
+
+// Add subject
+function addSubject() {
+    let container = document.getElementById("subjectsContainer");
+
+    let div = document.createElement("div");
+    div.className = "subject-box";
+
+    div.innerHTML = `
+        <input type="text" placeholder="Subject Name" class="name"><br>
+
+        <select class="grade">
+            <option value="">Select Grade</option>
+            <option>O</option>
+            <option>A+</option>
+            <option>A</option>
+            <option>B+</option>
+            <option>B</option>
+            <option>C</option>
+            <option>U</option>
+        </select><br>
+
+        <input type="number" placeholder="Credits" class="credit">
+    `;
+
+    container.appendChild(div);
+}
+
+// Calculate CGPA
+function calculateCGPA() {
+
+    let grades = document.getElementsByClassName("grade");
+    let credits = document.getElementsByClassName("credit");
+    let names = document.getElementsByClassName("name");
+
+    let totalPoints = 0;
+    let totalCredits = 0;
+
+    let graphLabels = [];
+    let graphData = [];
+
+    for (let i = 0; i < grades.length; i++) {
+
+        let gradeValue = grades[i].value;
+        let g = gradeToPoint(gradeValue);
+        let c = parseFloat(credits[i].value) || 0;
+
+        totalPoints += g * c;
+        totalCredits += c;
+
+        graphLabels.push(names[i].value || "Sub " + (i+1));
+        graphData.push(g);
+    }
+
+    if (totalCredits === 0) {
+        alert("Please enter valid data");
+        return;
+    }
+
+    let cgpa = totalPoints / totalCredits;
+    // STORE SGPA
+    localStorage.setItem("latestSGPA", cgpa.toFixed(2));
+
+    document.getElementById("result").innerText =
+        "Your SGPA is: " + cgpa.toFixed(2);
+
+    // Message
+    let msg = "";
+
+    if (cgpa >= 8.5) {
+        msg = "🔥 Outstanding! You are a top performer!";
+    } else if (cgpa >= 8.0) {
+        msg = "👏 Great job! You are doing really well!";
+    } else if (cgpa >= 6.5) {
+        msg = "👍 Good! Keep improving!";
+    } else {
+        msg = "💪 Don't give up! You can improve!";
+    }
+
+    document.getElementById("message").innerText = msg;
+
+    // Graph
+    if (chart) chart.destroy();
+
+    let ctx = document.getElementById("chart").getContext("2d");
+
+    chart = new Chart(ctx, {
+        type: "bar",
+        data: {
+            labels: graphLabels,
+            datasets: [{
+                label: "Grade Points",
+                data: graphData,
+                borderWidth: 1
+            }]
+        },
+        options: {
+            scales: {
+                y: {
+                    beginAtZero: true,
+                    max: 10
+                }
+            }
+        }
+    });
+    document.getElementById("backbtn").style.display="block";
+}
+function goBack(){
+    window.location.href = "dashboard.html";
+}
+function goToCGPA() {
+
+    let sgpa = localStorage.getItem("latestSGPA");
+
+    if (!sgpa) {
+        alert("Please calculate SGPA first!");
+        return;
+    }
+
+    window.location.href = "CGPA.html";
+}
+
+</script>
+</body>
+</html>

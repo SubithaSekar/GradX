@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student page</title>
+</head>
+<body>
+    <style>
+        body{
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background: #f5f5f5;
+    padding: 15px;
+}
+
+/* Main container */
+div{
+    background-color: antiquewhite;
+    padding: 15px;
+    border-radius: 10px;
+}
+
+/* Headings */
+h1, h2, h3, h4{
+    margin: 10px 0;
+}
+
+/* Paragraphs */
+p{
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+/* Image responsive */
+img{
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+/* Logout button alignment */
+.lout{
+    text-align: center;
+    margin-top: 20px;
+}
+
+/* Button style */
+button{
+    padding: 10px 20px;
+    border: none;
+    border-radius: 8px;
+    background: red;
+    color: white;
+    font-size: 16px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px){
+    h1{
+        font-size: 22px;
+    }
+    h2{
+        font-size: 18px;
+    }
+    p{
+        font-size: 14px;
+    }
+}
+    </style>
+    <div>
+        <center>
+            <h1>Overview of SGPA and CGPA</h1>
+        </center>
+        <h2>
+            Semester Grade Point Average(SGPA):
+        </h2>
+        <p>SGPA, or Semester Grade Point Average, is a weighted average that measures a student's academic performance in a specific,single semester.
+        It is calculated using the following formula:
+        <h3>Formula: </h3>
+        <h4>SGPA=Sum(credit X Grade point)/Sum(Total credits)</h4> 
+        </p>
+        <h2>
+            Cumulative Grade Point Average(CGPA):
+        </h2>
+        <p>CGPA, or Cumulative Grade Point Average, is a metric used to measure your total academic performance across all Semesters or years of your course.
+        While SGPA focuses on a single semester, CGPA provides the big picture of your entire journey.   
+        </p>
+        <h3>Formula: </h3>
+        <h4>CGPA=Sum(All semseter SGPA)/Total number of semesters</h4>
+        <hr>
+        <h1>Tips for success!🔥</h1>
+        <p>📌Focus on important topics</p>
+        <p>📌Practice previous year questions</p>
+        <p>📌Do revision before exam</p>
+        <p>📌Write neatly with headings</p>
+        <p>📌Secure internal marks</p>
+        <p>📌Study daily(even 1 hour)</p>
+        <p>📌Improve weak subjects</p>
+        <p>📌Avoid last-day new topics</p>
+        <p>📌Sleep well before exam</p>
+        <p>📌Manage time in exam</p>
+        <hr>
+        <center>
+            <img src="degree image.jpg">
+        </center>
+        <hr>
+        <div class="lout">
+            <button onclick="logout()">Logout</button>
+        </div>
+        <script>
+            function logout(){
+
+    // ❌ CLEAR ALL DATA
+                localStorage.clear();
+
+    // 🔁 GO BACK TO LOGIN PAGE
+                 window.location.href = "index.html";
+            }
+        </script>
+    </div>
+    <hr>
+</body>
+</html>

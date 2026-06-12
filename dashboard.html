@@ -1,0 +1,145 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <script>
+        if(localStorage.getItem("loggedIn") !== "true"){
+            window.location.href = "login.html";
+        }
+    </script>
+</head>
+<body>
+    <style>
+        body{
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .container{
+            max-width: 900px;
+            width: 95%;
+            margin: auto;
+            background-color: mediumaquamarine;
+            padding: 20px;
+            color: white;
+            border-radius: 10px;
+        }
+
+        h2{
+            font-size: 24px;
+            text-align: center;
+        }
+        #welcome{
+            text-align: center;
+        }
+
+        h3{
+            font-size: 18px;
+        }
+
+        p{
+            font-size: 16px;
+            line-height: 1.5;
+        }
+
+        img{
+            width: 50%;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 10px;
+        }
+
+        .links{
+            text-align: center;
+            margin: 20px 0;
+        }
+
+        .links a{
+            font-size: 18px;
+            margin: 0 10px;
+            text-decoration: none;
+            color: white;
+            font-weight: bold;
+        }
+
+        .info{
+            font-size: 14px;
+            background: rgba(255,255,255,0.2);
+            padding: 10px;
+            border-radius: 8px;
+        }
+
+        button{
+            display: block;
+            margin: 20px auto;
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            background-color: red;
+            color: white;
+        }
+
+        @media (max-width: 600px){
+            h2{ font-size: 20px; }
+            h3{ font-size: 16px; }
+        }
+    </style>
+    <div class="container">
+        <h1 id="welcome"></h1>
+
+        <script>
+            document.getElementById("welcome").innerText =
+            "Welcome " + localStorage.getItem("username") + " 👋";
+        </script>
+        <h2>CGPA-Calculation Interface for Students🔗</h2>
+        <img src="sgpa image.jpg">
+        <h3>✔️Calculate SGPA</h3>
+        <h3>✔️Calculate CGPA</h3>
+        <h3>✔️Store semester-wise data</h3>
+        <h3>✔️Compare performance</h3>
+        <h3>✔️Fast & easy interface</h3>
+        
+        <h1></h1>
+
+        <p>This is the website which is very useful for students in colleges for calculating their CGPA.
+            Using this website students can afford the graphical representation of their grades for each subjects and for each semester which gives best comparison for students to compare their academic activities with their pre and post marks grpahics.
+        </p>
+        <hr>
+        <div class="links">
+        <a href="SGPA.html">SGPA</a>|<a href="CGPA.html">CGPA</a>|<a href="c.html">Students page</a>
+        </div>
+        <hr>
+        <div class="info">
+            <h4>website info:</h4>
+            <h4>Designer: Subitha Sekar</h4>
+            <h4>For contact details:</h4>
+            <h4>Mail id:subithasekar2007@gmail.com</h4>
+        </div>
+        <button onclick="logout()" style="margin-left: 400px;">Logout</button>
+
+        <script>
+            function logout(){
+
+    // ❌ CLEAR ALL DATA
+                localStorage.clear();
+
+    // 🔁 GO BACK TO LOGIN PAGE
+                 window.location.href = "index.html";
+            }
+        </script>
+        <hr>
+
+                
+        
+        
+        
+    </div>
+    
+    
+</body>
+</html>

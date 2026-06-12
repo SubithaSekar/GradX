@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>CGPA Calculator</title>
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<style>
+    body{
+    font-family: Arial;
+    background: #f5f5f5; /* softer color */
+    justify-content: center;
+    margin: 0;
+    padding: 15px;
+    display: flex;
+    align-items: flex-start;
+    min-width: 100vh;
+    box-sizing: border-box;
+}
+
+/* Main container */
+.container{
+    background: white;
+    padding: 25px;
+    border-radius: 12px;
+    width: 100%;
+    max-width: 900px;
+    margin: auto;
+    box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+    min-height: 90vh;
+    box-sizing: border-box;
+}
+
+/* SGPA list */
+#sgpaList p{
+    background: #f9f9f9;
+    padding: 10px;
+    border-radius: 8px;
+    margin: 8px 0;
+    font-size: 16px;
+}
+
+/* Buttons */
+button{
+    padding: 10px;
+    margin: 8px 5px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+/* Reset button */
+button[onclick="resetCGPA()"]{
+    background: #ff4d4d;
+    color: white;
+}
+
+/* General buttons */
+a button{
+    background: #5f9cff;
+    color: white;
+}
+
+/* Chart responsive */
+canvas{
+    width: 100% !important;
+    height: auto !important;
+    margin-top: 20px;
+}
+
+/* Mobile adjustments */
+@media (max-width: 480px){
+    h2{
+        font-size: 20px;
+    }
+    h3{
+        font-size: 18px;
+    }
+    button{
+        width: 100%;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="container">
+<h2>CGPA Calculator</h2>
+
+<div id="sgpaList"></div>
+
+<h3 id="cgpaResult"></h3>
+
+<canvas id="cgpaChart"></canvas>
+<button onclick="resetCGPA()" style="margin-top: 20px;background: #ff4d4d;">Reset</button>
+<a href="SGPA.html">
+    <button>Back</button>
+</a>
+<a href="c.html">
+    <button>Next</button>
+</a>
+</div>
+
+<script>
+function resetCGPA() {
+    if(confirm("Are you sure you want to reset CGPA?")){
+        localStorage.removeItem("allSGPA");
+        localStorage.removeItem("latestSGPA");
+        window.location.href="SGPA.html"
+    }
+}
+let sgpas = [];
+
+// Get previous data
+let stored = JSON.parse(localStorage.getItem("allSGPA")) || [];
+
+// Get new SGPA
+let latest = localStorage.getItem("latestSGPA");
+
+if(latest){
+    stored.push(parseFloat(latest));
+    localStorage.setItem("allSGPA", JSON.stringify(stored));
+    localStorage.removeItem("latestSGPA");
+}
+
+// Display SGPAs
+let list = document.getElementById("sgpaList");
+
+stored.forEach((val, index)=>{
+
+    let div = document.createElement("div");
+
+    div.innerHTML = `
+        <p>
+        Your SGPA ${index+1} is: ${val}
+        <button onclick="deleteSem(${index})" 
+        style="margin-left:10px; background:red; color:white; border:none; border-radius:5px;">
+        Delete
+        </button>
+        </p>
+    `;
+
+    list.appendChild(div);
+});
+
+function deleteSem(index){
+
+    let stored = JSON.parse(localStorage.getItem("allSGPA")) || [];
+
+    if(confirm("Delete this semester?")){
+
+        stored.splice(index, 1); // remove that semester
+
+        localStorage.setItem("allSGPA", JSON.stringify(stored));
+
+        location.reload(); // refresh page
+    }
+}
+// Calculate CGPA
+if (stored.length === 0) {
+    document.getElementById("cgpaResult").innerText =
+    "No SGPA data available. Please calculate SGPA first.";
+} else {
+
+    let sum = stored.reduce((a,b)=>a+b,0);
+    let cgpa = sum / stored.length;
+
+    document.getElementById("cgpaResult").innerText =
+    "Your CGPA till now is: " + cgpa.toFixed(2);
+}
+
+// Graph
+let ctx = document.getElementById("cgpaChart").getContext("2d");
+
+new Chart(ctx,{
+    type:"bar",
+    data:{
+        labels: stored.map((_,i)=>"Sem "+(i+1)),
+        datasets:[{
+            label:"SGPA",
+            data: stored,
+            backgroundColor: [
+                "#ff6384",
+                "#36a2eb",
+                "#ffce56",
+                "#4bc0c0",
+                "#9966ff",
+                "#ff9f40"
+            ],
+            borderRadius: 8
+        }]
+    },
+    options:{
+        plugins:{
+            legend:{ display:false },
+            title:{
+                display:true,
+                text:"Semester-wise SGPA"
+            }
+        },
+        scales:{
+            y:{
+                beginAtZero:true,
+                max:10,
+                title:{
+                    display:true,
+                    text:"SGPA"
+                }
+            },
+            x:{
+                title:{
+                    display:true,
+                    text:"Semester"
+                }
+            }
+        }
+    }
+});
+
+</script>
+
+</body>
+</html>
