@@ -29,10 +29,6 @@ Beyond calculations, GradX also serves as an educational resource by helping stu
 2. Consistent experience across devices.
 
 # 🛠️Technology Stack
-### | Technology | Purpose|
-    -----------------------
-    | HTML5 | Structure and Content |
-    | CSS3 | Styling and Responsive Design |
-    | JavaScript | Functionality and Calculations |
-
-    
+1. HTML5 - Structure and Content
+2. CSS3 - Styling and Responsive Design
+3. JavaScript - Functionality and Calculations
