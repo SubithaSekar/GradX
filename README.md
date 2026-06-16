@@ -43,27 +43,27 @@ Beyond calculations, GradX also serves as an educational resource by helping stu
 
 # 🚀Highlights
 
-✔️Accurate SGPA Calculation 
-✔️Accurate CGPA Calculation
-✔️Mobile-Friendly Interface
-✔️Easy to use dashboard
-✔️Educational Student Resources
-✔️Fast and Lightweight Performance
+✔️ Accurate SGPA Calculation 
+✔️ Accurate CGPA Calculation
+✔️ Mobile-Friendly Interface
+✔️ Easy to use dashboard
+✔️ Educational Student Resources
+✔️ Fast and Lightweight Performance
 
 # 📁Modules Included
 
-📌Dashboard
-📌SGPA Calculator
-📌CGPA Calculator
-📌Student Information Page
+📌 Dashboard
+📌 SGPA Calculator
+📌 CGPA Calculator
+📌 Student Information Page
 
 # 👩‍💻Developer
 
 SUBITHA SEKAR
 
 Connect with me
-📌Github : https://github.com/SubithaSekar
-📌LinkedIn : https://www.linkedin.com/in/subitha-sekar-527550386/
+📌 Github : https://github.com/SubithaSekar
+📌 LinkedIn : https://www.linkedin.com/in/subitha-sekar-527550386/
 
 # ⭐Support
 
