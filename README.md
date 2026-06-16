@@ -6,9 +6,9 @@ Beyond calculations, GradX also serves as an educational resource by helping stu
 
 # ✨Key Features
 ## 📊SGPA Calculator
-1.Calculate semester-wise GPA accurately.
-2.Supports multiple subjects and credit values.
-3.Instant result generation.
+1. Calculate semester-wise GPA accurately.
+2. Supports multiple subjects and credit values.
+3. Instant result generation.
 
 ## 🎯CGPA Calculator
 1.Calculate cumulative GPA across semesters.
